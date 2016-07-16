@@ -18,11 +18,7 @@ public class Command_amiadmin extends FOPM_Command
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
-    {
-        if (!plugin.areWeDebugging()) {
-            sender.sendMessage(ChatColor.GRAY + "Debug mode is currently off. This command only works in debug mode.");
-        }
-        
+    {   
         if (FOPM_AdministratorList.isUserAdmin(sender)) {
             sender.sendMessage(ChatColor.GREEN + "You are an admin.");
         }
