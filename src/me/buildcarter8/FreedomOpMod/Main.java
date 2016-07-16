@@ -36,8 +36,8 @@ public class Main extends JavaPlugin
     public void onEnable()
     {
         cl.registerCmds();
-        log.minfo("FOPM Version " + VERSION + " has been enabled");
-        log.minfo("FOPM created by buildcarter8");
+        FOPM_PluginLog.info("FOPM Version " + VERSION + " has been enabled");
+        FOPM_PluginLog.info("FOPM created by buildcarter8");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new FOPM_PlayerHandler(), plugin);
 
@@ -46,7 +46,7 @@ public class Main extends JavaPlugin
     @Override
     public void onDisable()
     {
-        log.minfo("FOPM has been disabled");
+        FOPM_PluginLog.info("FOPM has been disabled");
     }
 
     public void loadMainConfig()
@@ -70,7 +70,7 @@ public class Main extends JavaPlugin
         }
         catch (Exception ex)
         {
-            log.msevere("Error loading superadmin list: " + ex.getMessage());
+            FOPM_PluginLog.severe("Error loading superadmin list: " + ex.getMessage());
         }
     }
 
