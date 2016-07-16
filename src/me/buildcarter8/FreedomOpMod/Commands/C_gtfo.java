@@ -12,7 +12,7 @@ import me.buildcarter8.FreedomOpMod.FOPM_Util;
 import me.buildcarter8.FreedomOpMod.Main;
 import net.md_5.bungee.api.ChatColor;
 
-public class Command_gtfo extends FOPM_Command
+public class C_gtfo extends FOPM_Command
 {
 
     private final Main plugin;
