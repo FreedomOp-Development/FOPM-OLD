@@ -58,6 +58,8 @@ public class Main extends JavaPlugin
 
     }
 
+    
+    // TODO: Fix super admin config! It doesn't work or detect anything!
     public void loadSuperadminConfig()
     {
         try
