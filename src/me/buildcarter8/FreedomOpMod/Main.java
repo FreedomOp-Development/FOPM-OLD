@@ -36,6 +36,7 @@ public class Main extends JavaPlugin
     public void onEnable()
     {
         cl.registerCmds();
+        loadSuperadminConfig();
         FOPM_PluginLog.info("FOPM Version " + VERSION + " has been enabled");
         FOPM_PluginLog.info("FOPM created by buildcarter8");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -59,7 +60,6 @@ public class Main extends JavaPlugin
 
     public void loadSuperadminConfig()
     {
-
         try
         {
             FOPM_SuperadminList.backupSavedList();

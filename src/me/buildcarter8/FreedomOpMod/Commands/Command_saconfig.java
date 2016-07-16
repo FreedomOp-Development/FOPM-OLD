@@ -23,36 +23,33 @@ public class Command_saconfig extends FOPM_Command
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
+        if (args.length == 0)
         {
-            if (isConsoleSender(sender))
+            return false;
+        }
+        if (args.length == 2)
+        {
+            if (!isConsoleSender(sender))
             {
                 msgNoPerms(sender);
+                return true;
             }
-            else
+            
+            if (args[0].equalsIgnoreCase("add"))
             {
-                if (args.length == 0)
-                {
-                    return false;
-                }
-                if (args.length == 2)
-                {
-                    if (args[0].equalsIgnoreCase("add"))
-                    {
-                        Player p = getPlayer(args[1]);
+                Player p = getPlayer(args[1]);
 
-                        if (p == null)
-                        {
-                            notFound(sender);
-                            return true;
-                        }
-
-                        String user_name = p.getName().toLowerCase().trim();
-                        FOPM_SuperadminList.addSuperadmin(user_name);
-                        Bukkit.broadcastMessage(ChatColor.RED + "Adding " + user_name + " to the super admin list");
-                    }
+                if (p == null)
+                {
+                    notFound(sender);
+                    return true;
                 }
+
+                String user_name = p.getName().toLowerCase().trim();
+                FOPM_SuperadminList.addSuperadmin(user_name);
+                Bukkit.broadcastMessage(ChatColor.RED + "Adding " + user_name + " to the super admin list");
             }
-            return true;
         }
+        return true;
     }
 }
