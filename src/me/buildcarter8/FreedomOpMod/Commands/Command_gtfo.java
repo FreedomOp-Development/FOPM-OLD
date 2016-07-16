@@ -1,35 +1,22 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
-
 import org.apache.commons.lang.time.DateUtils;
-import org.bukkit.BanEntry;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-<<<<<<< HEAD
 import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
-=======
-
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
->>>>>>> origin/master
 import me.buildcarter8.FreedomOpMod.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class Command_gtfo extends FOPM_Command
 {
-<<<<<<< HEAD
     @SuppressWarnings("unused")
     private final Main plugin;
-=======
-
-	private final Main plugin;
->>>>>>> origin/master
-
+    
     public Command_gtfo(Main plugin)
     {
         super("gtfo", "gtfo [player]", "SA Command - Make someone get the fuck out.", PERM_MESSAGE, Arrays.asList("ban"));
