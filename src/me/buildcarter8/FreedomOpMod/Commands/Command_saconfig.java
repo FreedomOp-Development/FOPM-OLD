@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_saconfig extends FOPM_Command
@@ -27,7 +27,7 @@ public class Command_saconfig extends FOPM_Command
         {
             return false;
         }
-        if (args.length == 2)
+        else if (args.length == 2)
         {
             if (!isConsoleSender(sender))
             {
@@ -45,9 +45,8 @@ public class Command_saconfig extends FOPM_Command
                     return true;
                 }
 
-                String user_name = p.getName().toLowerCase().trim();
-                FOPM_SuperadminList.addSuperadmin(user_name);
-                Bukkit.broadcastMessage(ChatColor.RED + "Adding " + user_name + " to the super admin list");
+                FOPM_AdministratorList.addSuperadmin(p);
+                Bukkit.broadcastMessage(ChatColor.RED + "Adding " + p + " to the super admin list");
             }
         }
         return true;

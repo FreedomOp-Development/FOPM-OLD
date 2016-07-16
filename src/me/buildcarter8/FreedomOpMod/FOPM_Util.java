@@ -4,23 +4,23 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetSocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
-
-import org.bukkit.Bukkit;
+import java.text.ParseException;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 public class FOPM_Util
 {
+    public static String DATE_STORAGE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
+    
+    
     public static String implodeStringList(String glue, List<String> pieces)
     {
         StringBuilder output = new StringBuilder();
@@ -105,115 +105,7 @@ public class FOPM_Util
             }
         }
     }
-
-    public static boolean isUserSuperadmin(CommandSender user, boolean IsUserSuperadmin)
-    {
-        try
-        {
-            if (!(user instanceof Player))
-            {
-                return true;
-            }
-
-            if (Bukkit.getOnlineMode())
-            {
-                if (Main.superadmins.contains(user.getName().toLowerCase()))
-                {
-                    return true;
-                }
-            }
-
-            Player p = (Player) user;
-            if (p != null)
-            {
-                InetSocketAddress ip_address_obj = p.getAddress();
-                if (ip_address_obj != null)
-                {
-                    String user_ip = ip_address_obj.getAddress().toString().replaceAll("/", "").trim();
-                    if (user_ip != null && !user_ip.isEmpty())
-                    {
-                        if (Main.superadmin_ips.contains(user_ip))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            FOPM_PluginLog.severe("Exception in FOPM_Util.isUserSuperadmin: " + ex.getMessage());
-        }
-
-        return false;
-    }
-
-    public static boolean checkPartialSuperadminIP(String user_ip, Main bf2)
-    {
-        user_ip = user_ip.trim();
-
-        if (Main.superadmin_ips.contains(user_ip))
-        {
-            return true;
-        }
-        else
-        {
-            String[] user_octets = user_ip.split("\\.");
-            if (user_octets.length != 4)
-            {
-                return false;
-            }
-
-            String match_ip = null;
-            for (String test_ip : Main.superadmin_ips)
-            {
-                String[] test_octets = test_ip.split("\\.");
-                if (test_octets.length == 4)
-                {
-                    if (user_octets[0].equals(test_octets[0]) && user_octets[1].equals(test_octets[1]) && user_octets[2].equals(test_octets[2]))
-                    {
-                        match_ip = test_ip;
-                        break;
-                    }
-                }
-            }
-
-            if (match_ip != null)
-            {
-                Main.superadmin_ips.add(user_ip);
-
-                FileConfiguration config = YamlConfiguration.loadConfiguration(new File(bf2.getDataFolder(), Main.SUPERADMIN_FILE));
-
-                fileloop: for (String user : config.getKeys(false))
-                {
-                    List<String> user_ips = (List<String>) config.getStringList(user);
-                    for (String ip : user_ips)
-                    {
-                        ip = ip.toLowerCase().trim();
-                        if (ip.equals(match_ip))
-                        {
-                            FOPM_PluginLog.info("New IP '" + user_ip + "' matches old IP '" + match_ip + "' via partial match, adding it to superadmin list.");
-                            user_ips.add(user_ip);
-                            config.set(user, user_ips);
-                            break fileloop;
-                        }
-                    }
-                }
-
-                try
-                {
-                    config.save(new File(bf2.getDataFolder(), Main.SUPERADMIN_FILE));
-                }
-                catch (IOException ex)
-                {
-                    FOPM_PluginLog.severe(null + "\n" + ex);
-                }
-            }
-
-            return match_ip != null;
-        }
-    }
-
+    
     public static boolean deleteFolder(File file)
     {
         if (file.exists())
@@ -236,33 +128,106 @@ public class FOPM_Util
             return false;
         }
     }
-
+    
     public static String dateToString(Date date)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new SimpleDateFormat(DATE_STORAGE_FORMAT, Locale.ENGLISH).format(date);
     }
 
-    public static Date stringToDate(String string)
+    public static Date stringToDate(String dateString)
     {
-        // TODO Auto-generated method stub
-        return null;
+        try
+        {
+            return new SimpleDateFormat(DATE_STORAGE_FORMAT, Locale.ENGLISH).parse(dateString);
+        }
+        catch (ParseException pex)
+        {
+            return new Date(0L);
+        }
     }
-
-    public static void createDefaultConfiguration(String superadminFile, String plugin_file)
+    
+    public static List<String> removeDuplicates(List<String> oldList)
     {
-        // TODO Auto-generated method stub
-
+        List<String> newList = new ArrayList<String>();
+        for (String entry : oldList)
+        {
+            if (!newList.contains(entry))
+            {
+                newList.add(entry);
+            }
+        }
+        return newList;
     }
+    
+    public static void createDefaultConfiguration(final String configFileName)
+    {
+        final File targetFile = new File(Main.plugin.getDataFolder(), configFileName);
 
+        if (targetFile.exists())
+        {
+            return;
+        }
+
+        FOPM_PluginLog.info("Installing default configuration file template: " + targetFile.getPath());
+
+        try
+        {
+            final InputStream configFileStream = Main.plugin.getResource(configFileName);
+            FileUtils.copyInputStreamToFile(configFileStream, targetFile);
+            configFileStream.close();
+        }
+        catch (IOException ex)
+        {
+            FOPM_PluginLog.severe(ex);
+        }
+    }
+    
+    public static boolean fuzzyIpMatch(String a, String b, int octets)
+    {
+        boolean match = true;
+
+        String[] aParts = a.split("\\.");
+        String[] bParts = b.split("\\.");
+
+        if (aParts.length != 4 || bParts.length != 4)
+        {
+            return false;
+        }
+
+        if (octets > 4)
+        {
+            octets = 4;
+        }
+        else if (octets < 1)
+        {
+            octets = 1;
+        }
+
+        for (int i = 0; i < octets && i < 4; i++)
+        {
+            if (aParts[i].equals("*") || bParts[i].equals("*"))
+            {
+                continue;
+            }
+
+            if (!aParts[i].equals(bParts[i]))
+            {
+                match = false;
+                break;
+            }
+        }
+
+        return match;
+    }
+    
     public static String getRank(CommandSender sender)
     {
-        if (FOPM_SuperadminList.isSuperadminImpostor(sender))
+        if (FOPM_AdministratorList.isSuperadminImpostor(sender))
         {
             return "an " + ChatColor.YELLOW + ChatColor.UNDERLINE + "impostor" + ChatColor.RESET + ChatColor.AQUA + "!";
         }
 
-        FOPM_Superadmin admin_entry = FOPM_SuperadminList.getAdminEntry(sender.getName());
+        FOPM_Administrator admin_entry = FOPM_AdministratorList.getAdminEntry(sender.getName());
 
         if (admin_entry != null)
         {
@@ -292,6 +257,7 @@ public class FOPM_Util
 
     }
 
+    
     public static String colorizeTheDamnThing(String string)
     {
         return ChatColor.translateAlternateColorCodes('&', string);

@@ -114,14 +114,6 @@ public abstract class FOPM_Command implements CommandExecutor, TabExecutor
         cmd.setExecutor(this);
     }
 
-    // Gets command to unregister through bukkit
-    public void unregister()
-    {
-        // Debugger
-        FOPM_PluginLog.info("Unregistering command " + this.command);
-        Bukkit.getPluginCommand(this.command).unregister(getCommandMap());
-    }
-
     final CommandMap getCommandMap()
     {
         if (cmap == null)
@@ -181,10 +173,8 @@ public abstract class FOPM_Command implements CommandExecutor, TabExecutor
         }
     }
 
-    @SuppressWarnings("override")
     public abstract boolean onCommand(CommandSender sender, Command cmd, String label, String[] args);
 
-    @SuppressWarnings("override")
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
     {
         return null;

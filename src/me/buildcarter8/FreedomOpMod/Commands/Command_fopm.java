@@ -2,10 +2,13 @@ package me.buildcarter8.FreedomOpMod.Commands;
 
 import java.util.Arrays;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+
+import me.buildcarter8.FreedomOpMod.FOPM_PluginLog;
+import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_fopm extends FOPM_Command
@@ -33,15 +36,21 @@ public class Command_fopm extends FOPM_Command
         {
             if (args[0].equalsIgnoreCase("reload"))
             {
-                if (!FOPM_SuperadminList.isUserSuperadmin(sender))
+                if (!FOPM_AdministratorList.isUserAdmin(sender))
                 {
                     msgNoPerms(sender);
                     return true;
                 }
 
-                sender.sendMessage(ChatColor.GRAY + "Reloading FOPM commands");
-                plugin.cl.unregisterCmds();
-                plugin.cl.registerCmds();
+                sender.sendMessage(ChatColor.GRAY + "Reloading FOPM");
+                try {
+                    Bukkit.getPluginManager().disablePlugin(plugin);
+                    Bukkit.getPluginManager().enablePlugin(plugin);
+                }
+                catch (Exception ex)
+                {
+                    FOPM_PluginLog.severe(ex);
+                }
                 sender.sendMessage(ChatColor.GRAY + "FOPM reloaded. Check logs to see if there are any issues.");
                 return true;
             }
