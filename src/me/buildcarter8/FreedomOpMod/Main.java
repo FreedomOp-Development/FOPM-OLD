@@ -21,7 +21,7 @@ public class Main extends JavaPlugin
     public static final String COMMAND_PATH = "me.buildcarter8.FreedomOpMod.Commands";
     public static final String COMMAND_PREFIX = "Command_";
     public static final List<String> DEVELOPERS = Arrays.asList("buildcarter8", "tylerhyperHD", "Cyro1999");
-   // private static List<String> seniorAdminNames = new ArrayList<String>();
+    private static List<String> seniorAdminNames = new ArrayList<String>();
     //
     public FOPM_PluginLog log;
     public FOPM_CommandLoader cl;
@@ -57,23 +57,18 @@ public class Main extends JavaPlugin
 
     }
 
-<<<<<<< HEAD
     public static List<String> superadmins = new ArrayList<String>();
     public static List<String> superadmin_ips = new ArrayList<String>();
 
-=======
-    
-    // TODO: Fix super admin config! It doesn't work or detect anything!
->>>>>>> origin/master
     public void loadSuperadminConfig()
     {
         try
         {
-            FOPM_SuperadminList.backupSavedList();
-            FOPM_SuperadminList.loadSuperadminList();
+            FOPM_AdministratorList.backupSavedList();
+            FOPM_AdministratorList.loadSuperadminList();
 
-            superadmins = FOPM_SuperadminList.getSuperadminNames();
-            superadmin_ips = FOPM_SuperadminList.getSuperadminIPs();
+            superadmins = FOPM_AdministratorList.getSuperadminNames();
+            superadmin_ips = FOPM_AdministratorList.getSuperadminIPs();
         }
         catch (Exception ex)
         {
