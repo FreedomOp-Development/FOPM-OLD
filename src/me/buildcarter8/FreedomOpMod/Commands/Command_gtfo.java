@@ -17,11 +17,12 @@ public class Command_gtfo extends FOPM_Command
 
     private final Main plugin;
 
-    public Command_gtfo(Main plugin) {
+    public Command_gtfo(Main plugin)
+    {
         super("gtfo", "gtfo [player]", "SA Command - Make someone get the fuck out.", PERM_MESSAGE, Arrays.asList("ban"));
         this.plugin = plugin;
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {

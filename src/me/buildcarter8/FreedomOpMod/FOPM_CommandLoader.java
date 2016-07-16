@@ -10,12 +10,11 @@ import me.buildcarter8.FreedomOpMod.Commands.Command_survival;
 public class FOPM_CommandLoader
 {
     // grabs all command classes for the plugin to load them up in
-    
+
     //
-    //  THIS class is REQUIRED to have the command load properly
+    // THIS class is REQUIRED to have the command load properly
     //
-    
-    
+
     private final Main plugin;
     //
     private final Command_fopm fopm;
@@ -24,8 +23,9 @@ public class FOPM_CommandLoader
     private final Command_saconfig saconfig;
     private final Command_creative creative;
     private final Command_survival survival;
-    
-    public FOPM_CommandLoader(Main plugin) {
+
+    public FOPM_CommandLoader(Main plugin)
+    {
         this.plugin = plugin;
         this.fopm = new Command_fopm(this.plugin);
         this.gtfo = new Command_gtfo(this.plugin);
@@ -34,8 +34,9 @@ public class FOPM_CommandLoader
         this.creative = new Command_creative(this.plugin);
         this.survival = new Command_survival(this.plugin);
     }
-    
-    public void registerCmds() {
+
+    public void registerCmds()
+    {
         fopm.register();
         gtfo.register();
         opall.register();
@@ -43,8 +44,9 @@ public class FOPM_CommandLoader
         creative.register();
         survival.register();
     }
-    
-    public void unregisterCmds() {
+
+    public void unregisterCmds()
+    {
         fopm.unregister();
         gtfo.unregister();
         opall.unregister();

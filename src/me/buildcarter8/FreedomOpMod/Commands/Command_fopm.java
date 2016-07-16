@@ -31,13 +31,14 @@ public class Command_fopm extends FOPM_Command
         }
         else if (args.length == 1)
         {
-            if(args[0].equalsIgnoreCase("reload"))
+            if (args[0].equalsIgnoreCase("reload"))
             {
-                if(!FOPM_SuperadminList.isUserSuperadmin(sender)) {
+                if (!FOPM_SuperadminList.isUserSuperadmin(sender))
+                {
                     msgNoPerms(sender);
                     return true;
                 }
-                
+
                 sender.sendMessage(ChatColor.GRAY + "Reloading FOPM commands");
                 plugin.cl.unregisterCmds();
                 plugin.cl.registerCmds();

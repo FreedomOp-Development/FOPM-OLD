@@ -11,10 +11,11 @@ import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_opall extends FOPM_Command
 {
-    
+
     private final Main plugin;
 
-    public Command_opall(Main plugin) {
+    public Command_opall(Main plugin)
+    {
         super("opall", "opall", "Op all players on the server", PERM_MESSAGE);
         this.plugin = plugin;
     }
