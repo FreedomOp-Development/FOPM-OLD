@@ -25,7 +25,7 @@ public class Command_saconfig extends FOPM_Command
         {
             if (isConsoleSender(sender))
             {
-                sender.sendMessage(Main.NOPE);
+                msgNoPerms(sender);
             }
             else
             {

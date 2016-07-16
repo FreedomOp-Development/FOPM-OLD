@@ -5,25 +5,46 @@ import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_fopm extends FOPM_Command
 {
     private final Main plugin;
 
-    public Command_fopm(Main plugin) {
+    public Command_fopm(Main plugin)
+    {
         super("fopm", "fopm", "The main FOPM command.", PERM_MESSAGE, Arrays.asList("fom"));
         this.plugin = plugin;
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        sender.sendMessage(ChatColor.AQUA + "======" + ChatColor.GREEN + "FreedomOpMod" + ChatColor.AQUA + "======");
-        sender.sendMessage(ChatColor.GREEN + "Version " + Main.VERSION);
-        sender.sendMessage(ChatColor.GREEN + "Created by buildcarter8 - Chief Dev FreedomOP");
-        sender.sendMessage(ChatColor.AQUA + "========================================================");
-
+        if (args.length == 0)
+        {
+            sender.sendMessage(ChatColor.AQUA + "======" + ChatColor.GREEN + "FreedomOpMod" + ChatColor.AQUA + "======");
+            sender.sendMessage(ChatColor.GREEN + "Version " + Main.VERSION);
+            sender.sendMessage(ChatColor.GREEN + "Created by buildcarter8 - Chief Dev FreedomOP");
+            sender.sendMessage(ChatColor.AQUA + "========================================================");
+            return true;
+        }
+        else if (args.length == 1)
+        {
+            if(args[0].equalsIgnoreCase("reload"))
+            {
+                if(!FOPM_SuperadminList.isUserSuperadmin(sender)) {
+                    msgNoPerms(sender);
+                    return true;
+                }
+                
+                sender.sendMessage(ChatColor.GRAY + "Reloading FOPM commands");
+                plugin.cl.unregisterCmds();
+                plugin.cl.registerCmds();
+                sender.sendMessage(ChatColor.GRAY + "FOPM reloaded. Check logs to see if there are any issues.");
+                return true;
+            }
+        }
         return true;
     }
 

@@ -21,8 +21,8 @@ public class Main extends JavaPlugin
     public static final String COMMAND_PREFIX = "Command_";
     private static List<String> seniorAdminNames = new ArrayList<String>();
     //
-    private FOPM_PluginLog log;
-    private FOPM_CommandLoader cl;
+    public FOPM_PluginLog log;
+    public FOPM_CommandLoader cl;
 
     @Override
     public void onLoad()
