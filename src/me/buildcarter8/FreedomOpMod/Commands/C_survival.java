@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
 import me.buildcarter8.FreedomOpMod.Main;
 
-public class Command_survival extends FOPM_Command
+public class C_survival extends FOPM_Command
 {
 
     private final Main plugin;

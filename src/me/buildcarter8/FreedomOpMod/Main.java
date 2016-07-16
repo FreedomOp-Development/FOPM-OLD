@@ -18,7 +18,7 @@ public class Main extends JavaPlugin
     public static final String CONFIG_FILE = "config.yml";
     public static String NOPE = ChatColor.RED + "You do not have the correct rank to use this command";
     public static final String COMMAND_PATH = "me.buildcarter8.FreedomOpMod.Commands";
-    public static final String COMMAND_PREFIX = "Command_";
+    public static final String COMMAND_PREFIX = "C_";
     private static List<String> seniorAdminNames = new ArrayList<String>();
     //
     public FOPM_PluginLog log;
