@@ -28,7 +28,7 @@ public class Command_fopm extends FOPM_Command
         {
             sender.sendMessage(ChatColor.AQUA + "======" + ChatColor.GREEN + "FreedomOpMod" + ChatColor.AQUA + "======");
             sender.sendMessage(ChatColor.GREEN + "Version " + Main.VERSION);
-            sender.sendMessage(ChatColor.GREEN + "Created by buildcarter8 - Chief Dev FreedomOP");
+            sender.sendMessage(ChatColor.GREEN + "Created by buildcarter8 (Chief of Development Operations)");
             sender.sendMessage(ChatColor.AQUA + "=====================================================");
             return true;
         }

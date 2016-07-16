@@ -11,14 +11,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+<<<<<<< HEAD
 import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
+=======
+
+import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+>>>>>>> origin/master
 import me.buildcarter8.FreedomOpMod.Main;
 import net.md_5.bungee.api.ChatColor;
 
 public class Command_gtfo extends FOPM_Command
 {
+<<<<<<< HEAD
     @SuppressWarnings("unused")
     private final Main plugin;
+=======
+
+	private final Main plugin;
+>>>>>>> origin/master
 
     public Command_gtfo(Main plugin)
     {

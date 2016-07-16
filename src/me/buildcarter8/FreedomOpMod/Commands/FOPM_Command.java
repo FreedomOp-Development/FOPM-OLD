@@ -3,7 +3,7 @@ package me.buildcarter8.FreedomOpMod.Commands;
 /*
  * The MIT License
  *
- * Copyright 2016 Goblom.
+ * Copyright 2016 buildcarter8.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
