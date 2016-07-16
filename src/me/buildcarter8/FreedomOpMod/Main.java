@@ -38,9 +38,10 @@ public class Main extends JavaPlugin
         cl.registerCmds();
         loadSuperadminConfig();
         FOPM_PluginLog.info("FOPM Version " + VERSION + " has been enabled");
-        FOPM_PluginLog.info("FOPM created by buildcarter8");
+        FOPM_PluginLog.info("FOPM created by buildcarter8 and the developement team");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new FOPM_PlayerHandler(), plugin);
+        pm.registerEvents(new FOPM_PlayerListener(), plugin);
 
     }
 
