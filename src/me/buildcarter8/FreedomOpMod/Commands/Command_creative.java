@@ -6,13 +6,13 @@ import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_creative extends FOPM_Command
 {
 
+    @SuppressWarnings("unused")
     private final Main plugin;
 
     public Command_creative(Main plugin)
@@ -38,14 +38,13 @@ public class Command_creative extends FOPM_Command
         if (args.length == 1)
         {
             Player player = getPlayer(args[0]);
-            Player sender_p = getSenderP(sender);
 
             if (player == null)
             {
                 notFound(sender);
             }
 
-            if (!FOPM_SuperadminList.isUserSuperadmin(sender))
+            if (!FOPM_AdministratorList.isUserAdmin(sender))
             {
                 msgNoPerms(sender);
                 return true;

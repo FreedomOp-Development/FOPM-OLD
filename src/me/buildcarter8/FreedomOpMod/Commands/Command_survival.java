@@ -6,7 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_survival extends FOPM_Command
@@ -43,7 +43,7 @@ public class Command_survival extends FOPM_Command
                 notFound(sender);
             }
 
-            if (!FOPM_SuperadminList.isUserSuperadmin(sender))
+            if (!FOPM_AdministratorList.isUserAdmin(sender))
             {
                 msgNoPerms(sender);
                 return true;

@@ -2,15 +2,15 @@ package me.buildcarter8.FreedomOpMod.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
-import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
+import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
 import me.buildcarter8.FreedomOpMod.FOPM_Util;
+import me.buildcarter8.FreedomOpMod.Main;
 
 public class FOPM_PlayerHandler implements Listener
 {
@@ -19,15 +19,19 @@ public class FOPM_PlayerHandler implements Listener
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event)
     {
-
         final Player p = event.getPlayer();
-        if (FOPM_SuperadminList.isUserSuperadmin(p))
+        if (FOPM_AdministratorList.isUserAdmin(p))
         {
             // Announce that player is super admin
             Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Util.getRank(p));
 
         }
-
+        // Announce Developer Login
+        if(Main.DEVELOPERS.contains(p.getName()))
+        {
+        	Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + ChatColor.DARK_PURPLE + "DEVELOPER" );
+        	
+        }
     }
 
 }

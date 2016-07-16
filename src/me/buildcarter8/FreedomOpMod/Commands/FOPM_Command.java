@@ -3,7 +3,7 @@ package me.buildcarter8.FreedomOpMod.Commands;
 /*
  * The MIT License
  *
- * Copyright 2016 Goblom.
+ * Copyright 2016 buildcarter8.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -114,14 +114,6 @@ public abstract class FOPM_Command implements CommandExecutor, TabExecutor
         cmd.setExecutor(this);
     }
 
-    // Gets command to unregister through bukkit
-    public void unregister()
-    {
-        // Debugger
-        FOPM_PluginLog.info("Unregistering command " + this.command);
-        Bukkit.getPluginCommand(this.command).unregister(getCommandMap());
-    }
-
     final CommandMap getCommandMap()
     {
         if (cmap == null)
@@ -181,10 +173,8 @@ public abstract class FOPM_Command implements CommandExecutor, TabExecutor
         }
     }
 
-    @SuppressWarnings("override")
     public abstract boolean onCommand(CommandSender sender, Command cmd, String label, String[] args);
 
-    @SuppressWarnings("override")
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
     {
         return null;

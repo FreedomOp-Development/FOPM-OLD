@@ -1,5 +1,6 @@
 package me.buildcarter8.FreedomOpMod;
 
+import me.buildcarter8.FreedomOpMod.Commands.Command_amiadmin;
 import me.buildcarter8.FreedomOpMod.Commands.Command_creative;
 import me.buildcarter8.FreedomOpMod.Commands.Command_fopm;
 import me.buildcarter8.FreedomOpMod.Commands.Command_gtfo;
@@ -23,6 +24,7 @@ public class FOPM_CommandLoader
     private final Command_saconfig saconfig;
     private final Command_creative creative;
     private final Command_survival survival;
+    private final Command_amiadmin amiadmin;
 
     public FOPM_CommandLoader(Main plugin)
     {
@@ -33,6 +35,7 @@ public class FOPM_CommandLoader
         this.saconfig = new Command_saconfig(this.plugin);
         this.creative = new Command_creative(this.plugin);
         this.survival = new Command_survival(this.plugin);
+        this.amiadmin = new Command_amiadmin(this.plugin);
     }
 
     public void registerCmds()
@@ -43,15 +46,6 @@ public class FOPM_CommandLoader
         saconfig.register();
         creative.register();
         survival.register();
-    }
-
-    public void unregisterCmds()
-    {
-        fopm.unregister();
-        gtfo.unregister();
-        opall.unregister();
-        saconfig.unregister();
-        creative.unregister();
-        survival.unregister();
+        amiadmin.register();
     }
 }
