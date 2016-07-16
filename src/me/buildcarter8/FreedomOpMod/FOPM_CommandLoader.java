@@ -1,11 +1,11 @@
 package me.buildcarter8.FreedomOpMod;
 
-import me.buildcarter8.FreedomOpMod.Commands.Command_creative;
-import me.buildcarter8.FreedomOpMod.Commands.Command_fopm;
-import me.buildcarter8.FreedomOpMod.Commands.Command_gtfo;
-import me.buildcarter8.FreedomOpMod.Commands.Command_opall;
-import me.buildcarter8.FreedomOpMod.Commands.Command_saconfig;
-import me.buildcarter8.FreedomOpMod.Commands.Command_survival;
+import me.buildcarter8.FreedomOpMod.Commands.C_creative;
+import me.buildcarter8.FreedomOpMod.Commands.C_fopm;
+import me.buildcarter8.FreedomOpMod.Commands.C_gtfo;
+import me.buildcarter8.FreedomOpMod.Commands.C_opall;
+import me.buildcarter8.FreedomOpMod.Commands.C_saconfig;
+import me.buildcarter8.FreedomOpMod.Commands.C_survival;
 
 public class FOPM_CommandLoader
 {
@@ -17,22 +17,22 @@ public class FOPM_CommandLoader
 
     private final Main plugin;
     //
-    private final Command_fopm fopm;
-    private final Command_gtfo gtfo;
-    private final Command_opall opall;
-    private final Command_saconfig saconfig;
-    private final Command_creative creative;
-    private final Command_survival survival;
+    private final C_fopm fopm;
+    private final C_gtfo gtfo;
+    private final C_opall opall;
+    private final C_saconfig saconfig;
+    private final C_creative creative;
+    private final C_survival survival;
 
     public FOPM_CommandLoader(Main plugin)
     {
         this.plugin = plugin;
-        this.fopm = new Command_fopm(this.plugin);
-        this.gtfo = new Command_gtfo(this.plugin);
-        this.opall = new Command_opall(this.plugin);
-        this.saconfig = new Command_saconfig(this.plugin);
-        this.creative = new Command_creative(this.plugin);
-        this.survival = new Command_survival(this.plugin);
+        this.fopm = new C_fopm(this.plugin);
+        this.gtfo = new C_gtfo(this.plugin);
+        this.opall = new C_opall(this.plugin);
+        this.saconfig = new C_saconfig(this.plugin);
+        this.creative = new C_creative(this.plugin);
+        this.survival = new C_survival(this.plugin);
     }
 
     public void registerCmds()
