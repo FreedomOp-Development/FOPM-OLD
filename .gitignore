@@ -1,3 +1,6 @@
+# FOPM Ignored Files
+bin/
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

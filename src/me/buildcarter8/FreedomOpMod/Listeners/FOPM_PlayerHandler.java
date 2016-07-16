@@ -14,20 +14,20 @@ import me.buildcarter8.FreedomOpMod.FOPM_Util;
 
 public class FOPM_PlayerHandler implements Listener
 {
-//This is ment to Handle Player login and player chat nothing else
-	
-	 @EventHandler(priority = EventPriority.MONITOR)
-	    public void onPlayerJoin(PlayerJoinEvent event)
-	    {
-	        
-	            final Player p = event.getPlayer();
-                if(FOPM_SuperadminList.isUserSuperadmin(p))
-                {
-                	//Announce that player is super admin
-                	Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Util.getRank(p));
-                	
-                }
-	            
-	            }
+    // This is ment to Handle Player login and player chat nothing else
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
+
+        final Player p = event.getPlayer();
+        if (FOPM_SuperadminList.isUserSuperadmin(p))
+        {
+            // Announce that player is super admin
+            Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Util.getRank(p));
+
+        }
+
+    }
 
 }
