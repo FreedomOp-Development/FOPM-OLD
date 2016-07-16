@@ -1,6 +1,7 @@
 package me.buildcarter8.FreedomOpMod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,7 +20,8 @@ public class Main extends JavaPlugin
     public static String NOPE = ChatColor.RED + "You do not have the correct rank to use this command";
     public static final String COMMAND_PATH = "me.buildcarter8.FreedomOpMod.Commands";
     public static final String COMMAND_PREFIX = "Command_";
-    private static List<String> seniorAdminNames = new ArrayList<String>();
+    public static final List<String> DEVELOPERS = Arrays.asList("buildcarter8", "tylerhyperHD", "Cyro1999");
+   // private static List<String> seniorAdminNames = new ArrayList<String>();
     //
     public FOPM_PluginLog log;
     public FOPM_CommandLoader cl;

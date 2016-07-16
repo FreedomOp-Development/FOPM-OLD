@@ -1,7 +1,6 @@
 package me.buildcarter8.FreedomOpMod;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FOPM_PluginLog
 {
