@@ -57,9 +57,14 @@ public class Main extends JavaPlugin
 
     }
 
+<<<<<<< HEAD
     public static List<String> superadmins = new ArrayList<String>();
     public static List<String> superadmin_ips = new ArrayList<String>();
 
+=======
+    
+    // TODO: Fix super admin config! It doesn't work or detect anything!
+>>>>>>> origin/master
     public void loadSuperadminConfig()
     {
         try
