@@ -3,12 +3,3 @@ version: 0.0.5
 main: me.buildcarter8.FreedomOpMod.Main
 author: buildcarter8
 description: Freedomopmod
-commands: 
-  fopm:
-   description: None
-  gtfo:
-   description: SA Command- GTFO HO
-  saconfig:
-   description: None
-  opall:
-   description: SA Command- Opall

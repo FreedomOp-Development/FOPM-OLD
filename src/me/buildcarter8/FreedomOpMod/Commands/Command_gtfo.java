@@ -1,5 +1,7 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,8 +15,15 @@ import net.md_5.bungee.api.ChatColor;
 public class Command_gtfo extends FOPM_Command
 {
 
+    private final Main plugin;
+
+    public Command_gtfo(Main plugin) {
+        super("gtfo", "gtfo [player]", "SA Command - Make someone get the fuck out.", PERM_MESSAGE, Arrays.asList("ban"));
+        this.plugin = plugin;
+    }
+    
     @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
         if (!FOPM_SuperadminList.isUserSuperadmin(sender))
         {

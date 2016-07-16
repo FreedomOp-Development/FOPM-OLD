@@ -1,20 +1,26 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
 import me.buildcarter8.FreedomOpMod.Main;
-import net.md_5.bungee.api.ChatColor;
 
 public class Command_opall extends FOPM_Command
 {
+    
+    private final Main plugin;
+
+    public Command_opall(Main plugin) {
+        super("opall", "opall", "Op all players on the server", PERM_MESSAGE);
+        this.plugin = plugin;
+    }
 
     @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
         if (!FOPM_SuperadminList.isUserSuperadmin(sender))
         {

@@ -1,22 +1,29 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import me.buildcarter8.FreedomOpMod.FOPM_SuperadminList;
 import me.buildcarter8.FreedomOpMod.Main;
-import net.md_5.bungee.api.ChatColor;
 
 public class Command_saconfig extends FOPM_Command
 {
+    private final Main plugin;
 
+    public Command_saconfig(Main plugin) {
+        super("saconfig", "saconfig [add] [player]", "SA Command - Super Admin Management", PERM_MESSAGE, Arrays.asList("admin"));
+        this.plugin = plugin;
+    }
+    
     @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
         {
-            if (!senderIsConsole)
+            if (isConsoleSender(sender))
             {
                 sender.sendMessage(Main.NOPE);
             }
@@ -24,14 +31,10 @@ public class Command_saconfig extends FOPM_Command
             {
                 if (args[0].equalsIgnoreCase("add"))
                 {
-                    Player p;
-                    try
-                    {
-                        p = getPlayer(args[1]);
-                    }
-                    catch (CantFindPlayerException ex)
-                    {
-                        sender.sendMessage(ex.getMessage());
+                    Player p = getPlayer(args[1]);
+                    
+                    if (p == null) {
+                        notFound(sender);
                         return true;
                     }
 
