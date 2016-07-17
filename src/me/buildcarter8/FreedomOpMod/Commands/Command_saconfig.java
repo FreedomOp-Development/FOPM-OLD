@@ -1,13 +1,12 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
 import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
+import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_saconfig extends FOPM_Command
@@ -44,8 +43,9 @@ public class Command_saconfig extends FOPM_Command
                     notFound(sender);
                     return true;
                 }
+                
+                
 
-                FOPM_AdministratorList.addSuperadmin(p);
                 Bukkit.broadcastMessage(ChatColor.RED + "Adding " + p + " to the super admin list");
             }
         }

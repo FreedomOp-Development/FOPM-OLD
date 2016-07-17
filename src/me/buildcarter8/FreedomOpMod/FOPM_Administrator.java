@@ -1,107 +1,150 @@
 package me.buildcarter8.FreedomOpMod;
 
-import java.util.Date;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import org.bukkit.configuration.ConfigurationSection;
+import java.util.UUID;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import net.md_5.bungee.api.ChatColor;
+
+// The admin list, done correctly the first time.
 
 public class FOPM_Administrator
 {
-    private final String name;
-    private final String loginMessage;
-    private final boolean isSeniorAdmin;
-    private final List<String> consoleAliases;
-    private final List<String> ips;
-    private Date lastLogin;
-    private boolean isActivated;
+    private static Main plugin;
+    private Map<UUID, List<UUID>> players;
 
-    public FOPM_Administrator(String name, List<String> ips, Date lastLogin, String loginMessage, boolean isSeniorAdmin, List<String> consoleAliases, boolean isActivated)
+    public FOPM_Administrator(Main plugin)
     {
-        this.name = name.toLowerCase();
-        this.ips = ips;
-        this.lastLogin = lastLogin;
-        this.loginMessage = loginMessage;
-        this.isSeniorAdmin = isSeniorAdmin;
-        this.consoleAliases = consoleAliases;
-        this.isActivated = isActivated;
+        FOPM_Administrator.plugin = plugin;
+        this.players = new HashMap<UUID, List<UUID>>();
     }
 
-    public FOPM_Administrator(String name, ConfigurationSection section)
+    public Map<UUID, List<UUID>> getSuperList()
     {
-        this.name = name.toLowerCase();
-        this.ips = section.getStringList("ips");
-        this.lastLogin = FOPM_Util.stringToDate(section.getString("last_login", FOPM_Util.dateToString(new Date(0L))));
-        this.loginMessage = section.getString("custom_login_message", "");
-        this.isSeniorAdmin = section.getBoolean("is_senior_admin", false);
-        this.consoleAliases = section.getStringList("console_aliases");
-        this.isActivated = section.getBoolean("is_activated", true);
+        return players;
     }
 
-    @Override
-    public String toString()
+    public static String getRank(Player player)
     {
-        StringBuilder output = new StringBuilder();
+        if (Main.DEVELOPERS.contains(player.getName()))
+        {
+            return ChatColor.DARK_PURPLE + "Developer";
+        }
+        else if (isUserAdmin(player))
+        {
+            return ChatColor.BLUE + "Super Admin";
+        }
+        else
+        {
+            return null;
+        }
+    }
 
+    public static boolean isUserAdmin(CommandSender sender)
+    {
+        Player sender_p = (Player) sender;
+        UUID uuid = sender_p.getUniqueId();
+
+        List<UUID> admins = getInstance().getSuperList().get(uuid);
+
+        if (admins.contains(uuid))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void saveAdmins(Map<UUID, List<UUID>> map)
+    {
         try
         {
-            output.append("Name: ").append(this.name).append("\n");
-            output.append("- IPs: ").append(StringUtils.join(this.ips, ", ")).append("\n");
-            output.append("- Last Login: ").append(FOPM_Util.dateToString(this.lastLogin)).append("\n");
-            output.append("- Custom Login Message: ").append(this.loginMessage).append("\n");
-            output.append("- Is Senior Admin: ").append(this.isSeniorAdmin).append("\n");
-            output.append("- Console Aliases: ").append(StringUtils.join(this.consoleAliases, ", ")).append("\n");
-            output.append("- Is Activated: ").append(this.isActivated);
+            File fileTwo = null;
+            if (fileTwo == null)
+            {
+                new File(plugin.getDataFolder(), "admins.yml");
+            }
+            FileOutputStream fos = new FileOutputStream(fileTwo);
+            PrintWriter pw = new PrintWriter(fos);
+
+            for (Map.Entry<UUID, List<UUID>> m : map.entrySet())
+            {
+                pw.println(m.getKey() + "=" + m.getValue());
+            }
+
+            pw.flush();
+            pw.close();
+            fos.close();
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            FOPM_PluginLog.severe(ex);
+            FOPM_PluginLog.severe(e);
         }
-
-        return output.toString();
     }
 
-    public String getName()
+    public void loadAdmins()
     {
-        return name;
+        try
+        {
+            File toRead = null;
+            if (toRead == null)
+            {
+                new File(plugin.getDataFolder(), "admins.yml");
+            }
+
+            FileInputStream fis = new FileInputStream(toRead);
+
+            Scanner sc = new Scanner(fis);
+            Map<UUID, List<UUID>> mapInFile = new HashMap<UUID, List<UUID>>();
+
+            // read data from file line by line:
+            String currentLine;
+            while (sc.hasNextLine())
+            {
+                currentLine = sc.nextLine();
+                // now tokenize the currentLine:
+                StringTokenizer st = new StringTokenizer(currentLine, "=", false);
+                // put tokens ot currentLine in map
+                UUID uuid = UUID.fromString(st.nextToken());
+                List<UUID> list = Arrays.asList(UUID.fromString(st.nextToken()));
+                mapInFile.put(uuid, list);
+            }
+            fis.close();
+
+            // print All data in MAP
+            for (Map.Entry<UUID, List<UUID>> m : mapInFile.entrySet())
+            {
+                getInstance().getSuperList().clear();
+                getInstance().getSuperList().put(m.getKey(), m.getValue());
+            }
+        }
+        catch (Exception e)
+        {
+            FOPM_PluginLog.severe(e);
+        }
     }
 
-    public List<String> getIps()
+    public static FOPM_Administrator getInstance()
     {
-        return ips;
+        return FOPM_AdministratorHolder.INSTANCE;
     }
 
-    public Date getLastLogin()
+    private static class FOPM_AdministratorHolder
     {
-        return lastLogin;
-    }
-
-    public String getCustomLoginMessage()
-    {
-        return loginMessage;
-    }
-
-    public boolean isSeniorAdmin()
-    {
-        return isSeniorAdmin;
-    }
-
-    public List<String> getConsoleAliases()
-    {
-        return consoleAliases;
-    }
-
-    public void setLastLogin(Date lastLogin)
-    {
-        this.lastLogin = lastLogin;
-    }
-
-    public boolean isActivated()
-    {
-        return isActivated;
-    }
-
-    public void setActivated(boolean isActivated)
-    {
-        this.isActivated = isActivated;
+        private static final FOPM_Administrator INSTANCE = new FOPM_Administrator(plugin);
     }
 }

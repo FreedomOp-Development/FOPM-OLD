@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
+import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.Main;
 import net.md_5.bungee.api.ChatColor;
 
@@ -26,7 +26,7 @@ public class Command_gtfo extends FOPM_Command
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        if (!FOPM_AdministratorList.isUserAdmin(sender))
+        if (!FOPM_Administrator.isUserAdmin(sender))
         {
             sender.sendMessage(Main.NOPE);
         }

@@ -8,29 +8,24 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
-import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
+import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.FOPM_Util;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class FOPM_PlayerHandler implements Listener
 {
-    // This is ment to Handle Player login and player chat nothing else
+    // This is meant to Handle Player login and player chat nothing else
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event)
     {
+        // Main method used completely
         final Player p = event.getPlayer();
-        if (FOPM_AdministratorList.isUserAdmin(p))
+        if (FOPM_Administrator.isUserAdmin(p))
         {
             // Announce that player is super admin
-            Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Util.getRank(p));
+            Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Administrator.getRank(p));
 
-        }
-        // Announce Developer Login
-        if(Main.DEVELOPERS.contains(p.getName()))
-        {
-        	Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + ChatColor.DARK_PURPLE + "DEVELOPER" );
-        	
         }
     }
 

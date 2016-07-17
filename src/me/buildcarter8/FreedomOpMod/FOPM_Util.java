@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,6 @@ import java.util.zip.ZipEntry;
 import java.text.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 
 public class FOPM_Util
 {
@@ -220,43 +220,30 @@ public class FOPM_Util
         return match;
     }
     
-    public static String getRank(CommandSender sender)
+    /**
+     * Write the specified InputStream to a file.
+     *
+     * @param in The InputStream from which to read.
+     * @param file The File to write to.
+     * @throws IOException
+     */
+    public static void copy(InputStream in, File file) throws IOException // BukkitLib @ https://github.com/Pravian/BukkitLib
     {
-        if (FOPM_AdministratorList.isSuperadminImpostor(sender))
+        if (!file.exists())
         {
-            return "an " + ChatColor.YELLOW + ChatColor.UNDERLINE + "impostor" + ChatColor.RESET + ChatColor.AQUA + "!";
+            file.getParentFile().mkdirs();
         }
 
-        FOPM_Administrator admin_entry = FOPM_AdministratorList.getAdminEntry(sender.getName());
-
-        if (admin_entry != null)
+        final OutputStream out = new FileOutputStream(file);
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0)
         {
-            if (admin_entry.isActivated())
-            {
-                String custom_login_message = admin_entry.getCustomLoginMessage();
-
-                if (custom_login_message != null)
-                {
-                    if (!custom_login_message.isEmpty())
-                    {
-                        return ChatColor.translateAlternateColorCodes('&', custom_login_message);
-                    }
-                }
-
-                if (admin_entry.isSeniorAdmin())
-                {
-                    return "a " + ChatColor.GOLD + "senior admin" + ChatColor.AQUA + ".";
-                }
-                else
-                {
-                    return "an " + ChatColor.RED + "admin" + ChatColor.AQUA + ".";
-                }
-            }
+            out.write(buf, 0, len);
         }
-        return null;
-
+        out.close();
+        in.close();
     }
-
     
     public static String colorizeTheDamnThing(String string)
     {

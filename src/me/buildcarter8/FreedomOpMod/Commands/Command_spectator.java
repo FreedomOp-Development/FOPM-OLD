@@ -1,20 +1,16 @@
 package me.buildcarter8.FreedomOpMod.Commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import me.buildcarter8.FreedomOpMod.FOPM_AdministratorList;
+import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_spectator extends FOPM_Command
 {
-
     private final Main plugin;
-
     public Command_spectator(Main plugin)
     {
         super("spectator", "spectator", "Spectate the OPs", PERM_MESSAGE);
@@ -24,7 +20,7 @@ public class Command_spectator extends FOPM_Command
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        if (!FOPM_AdministratorList.isUserAdmin(sender))
+        if (!FOPM_Administrator.isUserAdmin(sender))
         {
             sender.sendMessage(Main.NOPE);
         }
@@ -43,14 +39,13 @@ public class Command_spectator extends FOPM_Command
             if (args.length == 1)
             {
                 Player player = getPlayer(args[0]);
-                Player sender_p = getSenderP(sender);
 
                 if (player == null)
                 {
                     notFound(sender);
                 }
 
-                if (!FOPM_AdministratorList.isUserAdmin(sender))
+                if (!FOPM_Administrator.isUserAdmin(sender))
                 {
                     msgNoPerms(sender);
                     return true;
