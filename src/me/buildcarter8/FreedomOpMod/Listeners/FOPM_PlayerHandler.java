@@ -7,13 +7,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
-
 import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
-import me.buildcarter8.FreedomOpMod.FOPM_Util;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class FOPM_PlayerHandler implements Listener
 {
+    private final Main plugin;
+    public FOPM_PlayerHandler(Main plugin)
+    {
+        this.plugin = plugin;
+    }
+    
     // This is meant to Handle Player login and player chat nothing else
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -21,7 +25,7 @@ public class FOPM_PlayerHandler implements Listener
     {
         // Main method used completely
         final Player p = event.getPlayer();
-        if (FOPM_Administrator.isUserAdmin(p))
+        if (plugin.al.isUserAdmin(p))
         {
             // Announce that player is super admin
             Bukkit.broadcastMessage(ChatColor.GOLD + p.getDisplayName() + " is a " + FOPM_Administrator.getRank(p));

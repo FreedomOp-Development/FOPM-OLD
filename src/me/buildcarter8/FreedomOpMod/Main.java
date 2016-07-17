@@ -1,5 +1,6 @@
 package me.buildcarter8.FreedomOpMod;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -34,12 +35,13 @@ public class Main extends JavaPlugin
     @Override
     public void onEnable()
     {
+        new File(plugin.getDataFolder().toString()).mkdirs();        
         al.loadAdmins();
         cl.registerCmds();
         FOPM_PluginLog.info("FOPM Version " + VERSION + " has been enabled");
         FOPM_PluginLog.info("FOPM created by buildcarter8 and the developement team");
         final PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new FOPM_PlayerHandler(), plugin);
+        pm.registerEvents(new FOPM_PlayerHandler(plugin), plugin);
         pm.registerEvents(new FOPM_PlayerListener(), plugin);
 
     }
@@ -47,6 +49,7 @@ public class Main extends JavaPlugin
     @Override
     public void onDisable()
     {
+        al.saveAll();
         FOPM_PluginLog.info("FOPM has been disabled");
     }
 

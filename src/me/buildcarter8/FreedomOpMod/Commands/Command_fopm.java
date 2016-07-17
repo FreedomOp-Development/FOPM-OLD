@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.buildcarter8.FreedomOpMod.FOPM_PluginLog;
-import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_fopm extends FOPM_Command
@@ -35,7 +34,7 @@ public class Command_fopm extends FOPM_Command
         {
             if (args[0].equalsIgnoreCase("reload"))
             {
-                if (!FOPM_Administrator.isUserAdmin(sender))
+                if (!plugin.al.isUserAdmin(sender))
                 {
                     msgNoPerms(sender);
                     return true;

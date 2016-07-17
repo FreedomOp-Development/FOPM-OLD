@@ -11,15 +11,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import net.md_5.bungee.api.ChatColor;
-
 // The admin list, done correctly the first time.
-
 public class FOPM_Administrator
 {
     private static Main plugin;
@@ -31,18 +28,13 @@ public class FOPM_Administrator
         this.players = new HashMap<UUID, List<UUID>>();
     }
 
-    public Map<UUID, List<UUID>> getSuperList()
-    {
-        return players;
-    }
-
     public static String getRank(Player player)
     {
         if (Main.DEVELOPERS.contains(player.getName()))
         {
             return ChatColor.DARK_PURPLE + "Developer";
         }
-        else if (isUserAdmin(player))
+        else if (getInstance().isUserAdmin(player))
         {
             return ChatColor.BLUE + "Super Admin";
         }
@@ -51,15 +43,33 @@ public class FOPM_Administrator
             return null;
         }
     }
+    
+    public void addAdmin(CommandSender sender)
+    {
+        Player sender_p = (Player) sender;
+        UUID uuid = sender_p.getUniqueId();
+        List<UUID> admins = players.get(uuid);
+        
+        admins.add(uuid);
+    }
 
-    public static boolean isUserAdmin(CommandSender sender)
+    public boolean isUserAdmin(CommandSender sender)
     {
         Player sender_p = (Player) sender;
         UUID uuid = sender_p.getUniqueId();
 
-        List<UUID> admins = getInstance().getSuperList().get(uuid);
+        List<UUID> admins = players.get(uuid);
 
-        if (admins.contains(uuid))
+        if(sender.getName() == Bukkit.getConsoleSender().getName())
+        {
+            return true;
+        }
+        
+        if(admins.isEmpty())
+        {
+            return false;
+        }
+        else if (admins.contains(uuid))
         {
             return true;
         }
@@ -68,16 +78,22 @@ public class FOPM_Administrator
             return false;
         }
     }
-
+    
+    public void saveAll()
+    {
+        try {
+            saveAdmins(players);
+        }
+        catch(Exception ex) {
+            FOPM_PluginLog.severe("Failed to save the admin list!" + ex);
+        }
+    }
+    
     public void saveAdmins(Map<UUID, List<UUID>> map)
     {
         try
         {
-            File fileTwo = null;
-            if (fileTwo == null)
-            {
-                new File(plugin.getDataFolder(), "admins.yml");
-            }
+            File fileTwo = new File(plugin.getDataFolder(), File.separator + "admins.yml");
             FileOutputStream fos = new FileOutputStream(fileTwo);
             PrintWriter pw = new PrintWriter(fos);
 
@@ -100,12 +116,11 @@ public class FOPM_Administrator
     {
         try
         {
-            File toRead = null;
-            if (toRead == null)
-            {
-                new File(plugin.getDataFolder(), "admins.yml");
+            File toRead = new File(plugin.getDataFolder(), File.separator + "admins.yml");
+            if (!toRead.exists()) {
+                toRead.createNewFile();
             }
-
+            
             FileInputStream fis = new FileInputStream(toRead);
 
             Scanner sc = new Scanner(fis);
@@ -128,8 +143,8 @@ public class FOPM_Administrator
             // print All data in MAP
             for (Map.Entry<UUID, List<UUID>> m : mapInFile.entrySet())
             {
-                getInstance().getSuperList().clear();
-                getInstance().getSuperList().put(m.getKey(), m.getValue());
+                players.clear();
+                players.put(m.getKey(), m.getValue());
             }
         }
         catch (Exception e)

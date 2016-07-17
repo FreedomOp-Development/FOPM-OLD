@@ -6,12 +6,10 @@ import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.buildcarter8.FreedomOpMod.FOPM_Administrator;
 import me.buildcarter8.FreedomOpMod.Main;
 
 public class Command_opall extends FOPM_Command
 {
-
     private final Main plugin;
 
     public Command_opall(Main plugin)
@@ -23,7 +21,7 @@ public class Command_opall extends FOPM_Command
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        if (!FOPM_Administrator.isUserAdmin(sender))
+        if (!plugin.al.isUserAdmin(sender))
         {
             sender.sendMessage(Main.NOPE);
         }
