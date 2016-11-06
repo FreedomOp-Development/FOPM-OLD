@@ -1,5 +1,5 @@
 name: FreedomOPMod
-version: 0.1.1
+version: 0.0.1
 main: me.buildcarter8.FreedomOpMod.Main
 author: buildcarter8
-description: Freedom mod for a freedom-based server.
+description: A Plugin developed for freedomop a free op minecraft server
